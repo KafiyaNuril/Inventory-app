@@ -91,6 +91,19 @@
                                     Item
                                 </a>
                             </li>
+                            <li>
+                                <a href="#userSubmenu" data-bs-toggle="collapse"
+                                    class="nav-link text-dark dropdown-toggle @if (request()->routeIs('user.index')) active @endif">
+                                    <i class="bi bi-people-fill me-2"></i>
+                                    User
+                                </a>
+                                <ul class="collapse list-unstyled" id="userSubmenu" style="padding-left: 2rem;">
+                                    <li>
+                                        <a href="{{ route('user.edit', auth()->user()->id) }}"
+                                            class="nav-link text-dark @if (route('user.edit', auth()->user()->id)) fw-bold @endif">Edit</a>
+                                    </li>
+                                </ul>
+                            </li>
                         @endif
                     @endauth
                 </ul>

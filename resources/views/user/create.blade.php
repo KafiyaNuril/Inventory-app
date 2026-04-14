@@ -5,7 +5,7 @@
             {{ Session::get('success') }}
         </div>
     @endif
-    <div class="container card p-4 w-50">
+    <div class="container mt-5 card p-4 w-50">
         <form action="{{ route('user.store') }}" method="POST">
             @csrf
 
@@ -36,7 +36,7 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <a href="{{ url()->previous() }} class="btn btn-secondary">Cancel</a>
+            <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancel</a>
             <button type="submit" class="btn btn-dark">Submit</button>
         </form>
     </div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container card p-4 w-50">
+    <div class="container my-5 card p-4 w-50">
         @if (session('error'))
             <div class="alert alert-danger">
                 {{ session('error') }}
