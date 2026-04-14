@@ -7,7 +7,11 @@
     @endif
     <div class="d-flex justify-content-between">
         <h3>Tabel User {{ ucfirst(request('role') ?? 'All ') }}</h3>
-        <a class="btn btn-dark mb-3" href="{{ route('user.create') }}" role="button">+ add</a>
+        <div>
+            <a class="btn btn-success mb-3" href="{{ route('user.export', ['role' => request('role') ?? 'all']) }}"
+                role="button">Export Excel</a>
+            <a class="btn btn-dark mb-3" href="{{ route('user.create') }}" role="button">+ add</a>
+        </div>
     </div>
     <table class="table">
         <thead>
@@ -19,19 +23,20 @@
             </tr>
         </thead>
         <tbody>
-            @if( count($users) < 1 )
+            @if (count($users) < 1)
                 <tr>
                     <td colspan="5" class="text-center">User is Empty</td>
                 </tr>
             @else
-                @foreach( $users as $index => $user)
+                @foreach ($users as $index => $user)
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>
-                            @if($user->role == 'admin')
-                                <a class="btn btn-success" href="{{ route('user.edit', $user->id) }}" role="button">edit</a>
+                        <td class="d-flex gap-2">
+                            @if ($user->role == 'admin')
+                                <a class="btn btn-success" href="{{ route('user.edit', $user->id) }}"
+                                    role="button">edit</a>
                             @else
                                 <form action="{{ route('user.reset', $user->id) }}" method="POST">
                                     @csrf
@@ -39,13 +44,37 @@
                                     <button class="btn btn-warning">Reset Password</button>
                                 </form>
                             @endif
-                            <form action="{{ route('user.destroy', $user->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger">Delete</button>
-                            </form>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal-{{ $user->id }}">
+                                Delete
+                            </button>
                         </td>
                     </tr>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="deleteModal-{{ $user->id }}" tabindex="-1"
+                        aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="deleteModalLabel">Confirm Deletion</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete the user <strong>{{ $user->name }}</strong>?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
             @endif
         </tbody>

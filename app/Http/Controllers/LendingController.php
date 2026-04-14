@@ -7,6 +7,8 @@ use App\Models\DetailLending;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\LendingExport;
 
 class LendingController extends Controller
 {
@@ -127,10 +129,10 @@ class LendingController extends Controller
 
         return redirect()->back()->with('success', 'Lendingd deleted successfully');
     }
-    
-    // public function export()
-    // {
-    //     return Excel::download(new LendingExport, 'lendings.xlsx');
-    // }
+
+    public function export()
+    {
+        return Excel::download(new LendingExport, 'lendings.xlsx');
+    }
 
 }

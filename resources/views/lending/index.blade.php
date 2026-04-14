@@ -7,16 +7,17 @@
             </div>
         @endif
 
-        <div class="d-flex justify-content-between my-3">
-            <h3 class="fw-bold">Table Lendings</h3>
+        <div class="d-flex justify-content-between mb-3">
+            <h2>Table Lendings</h2>
             <div>
-                <a href="{{ route('lending.create') }}" type="button" class="btn btn-dark me-5">+ add</a>
+                <a href="{{ route('lending.export') }}" type="button" class="btn btn-success">Export Excel</a>
+                <a href="{{ route('lending.create') }}" type="button" class="btn btn-dark">+ add</a>
             </div>
         </div>
 
-        <table class="table mt-3">
+        <table class="table">
             <thead>
-                <tr class="text-center">
+                <tr class="table-active text-center">
                     <th>#</th>
                     <th>Item</th>
                     <th>Total</th>
@@ -43,12 +44,13 @@
                             <td>{{ $lending->total_qty ?? 0 }}</td>
                             <td>{{ $lending->name }}</td>
                             <td>{{ $lending->notes }}</td>
-                            <td>{{ $lending->borrow_date->format('j F Y') }}</td>
+                            <td>{{ $lending->borrow_date->timezone('Asia/Jakarta')->format('j F Y | h:i') }}</td>
                             <td>
                                 @if ($lending->return_date == null)
                                     <p class="text-warning border border-warning border-2 p-1 text-center">Not Returned</p>
                                 @else
-                                    <p class="text-success border border-success border-2 p-1 text-center">{{ $lending->return_date->format('j F Y') }}</p>
+                                    <p class="text-success border border-success border-2 p-1 text-center">
+                                        {{ $lending->return_date->timezone('Asia/Jakarta')->format('j F Y | h:i') }}</p>
                                 @endif
                             </td>
                             <td class="fw-bolder">
@@ -63,11 +65,13 @@
                                     </form>
                                 @endif
 
-                                <form action="{{ route('lending.destroy', $lending->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger">Delete</button>
-                                </form>
+                                @if ($lending->return_date != null)
+                                    <form action="{{ route('lending.destroy', $lending->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

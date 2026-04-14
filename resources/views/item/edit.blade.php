@@ -22,7 +22,7 @@
                 <label for="category_id" class="form-label">Category</label>
                 <select class="form-select @error('category_id') is-invalid @enderror" name="category_id">
                     <option selected disabled hidden>Select Category</option>
-                    @foreach( $categories as $category)
+                    @foreach ($categories as $category)
                         <option value="{{ $category->id }}" @selected($item->category_id == $category->id)>{{ $category->name }}</option>
                     @endforeach
                 </select>
@@ -39,9 +39,10 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="repair" class="form-label">New Broke Item <span class="text-warning">( currently : {{ $item->repair }} )</span></label>
-                <input type="number" class="form-control @error('repair') is-invalid @enderror" name="repair">
-                @error('repair')
+                <label for="repair" class="form-label">New Broke Item <span class="text-warning">( currently :
+                        {{ $item->repair }} )</span></label>
+                <input type="number" class="form-control @error('new_repair') is-invalid @enderror" name="new_repair">
+                @error('new_repair')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>

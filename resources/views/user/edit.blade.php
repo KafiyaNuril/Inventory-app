@@ -34,7 +34,9 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <a href="{{ route('user.index') }}" class="btn btn-secondary">Cancel</a>
+            @if (Auth::user()->role != 'operator')
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancel</a>
+            @endif
             <button type="submit" class="btn btn-dark">Submit</button>
         </form>
     </div>

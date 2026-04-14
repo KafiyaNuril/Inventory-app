@@ -6,7 +6,7 @@
         </div>
     @endif
     <div class="d-flex justify-content-between">
-        <h5>Tabel item</h5>
+        <h2>Tabel item</h2>
     </div>
     <table class="table">
         <thead>

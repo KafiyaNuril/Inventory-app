@@ -7,6 +7,8 @@ use Illuminate\Validation\Rule;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UsersExport;
 
 class UserController extends Controller
 {
@@ -60,7 +62,7 @@ class UserController extends Controller
             'password_plain' => $plainPassword,
         ]);
 
-        return redirect()->back()->with('success', 'User added succeccfully');
+        return redirect()->back()->with('success', 'User added succeccfully with password : ' . $plainPassword);
     }
 
     /**
@@ -98,19 +100,18 @@ class UserController extends Controller
             'email' => $request->email,
         ]);
 
-        if($request->filled('password')) {
+        if ($request->filled('password')) {
             $user->update([
                 'password' => Hash::make($request->password),
                 'password_plain' => null
             ]);
         }
 
-        if(Auth::user()->role == 'admin') {
-            return redirect()->route('user.index', ['role' => $request->role])->with('success', 'User updated successfully');
+        if (Auth::user()->role == 'admin') {
+            return redirect(url()->previous())->with('success', 'User updated successfully');
         }
 
         return redirect()->back()->with('success', 'User updated successfully');
-
     }
 
     /**
@@ -127,14 +128,20 @@ class UserController extends Controller
     public function resetPassword(string $id)
     {
         $user = User::findOrFail($id);
-
-        $plainPassword = substr($request->email, 0, 4) . $user->id;
+        $resetPassword = substr($user->email, 0, 4 ?: strlen($user->email)) . $user->id;
 
         $user->update([
-            'password' => Hash::make($plainPassword),
-            'password_plain' => $plainPassword,
+            'password' => Hash::make($resetPassword),
+            'password_plain' => $resetPassword
         ]);
 
-        return redirect()->back()->with('success', 'Reset Password user succeccfully');
+        return redirect()->back()->with('success', 'Password successfully reset to: ' . $resetPassword);
+    }
+
+
+    public function export($role)
+    {
+        $name = ($role == 'admin') ? 'admin-accounts' : 'operator-accounts';
+        return Excel::download(new UsersExport($role), "$name.xlsx");
     }
 }

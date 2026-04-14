@@ -1,80 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory App</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Inventaris App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .nav-pills .nav-link.active,
+        .nav-pills .show>.nav-link {
+            background-color: #e9ecef;
+            color: #212529;
+            font-weight: bolder;
+        }
+    </style>
 </head>
-<body>
-    <nav class="navbar bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand">Navbar</a>
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button class="btn btn-outline-dark">Logout</button>
-            </form>
-        </div>
-    </nav>
-    
-    <div class="row">
-        <ul class="col-2 nav flex-column border-end fs-6 ps-4">
-            @auth
-                @if (auth()->user()->role == 'admin')
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" aria-current="page" href="{{ route('dashboard') }}">Dashboard</a>
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link text-dark" href="{{ route('category.index') }}">Categeory</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="{{ route('item.index') }}">Item</a>
-                    </li>
-                    <li class="nav-item dropdown-center">
-                        <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#">
-                            <i class="bi bi-person-fill"></i> User
-                        </a>
-                        <ul class="dropdown-menu bg-transparent border-0 shadow-none">
-                            <li>
-                                <a class="dropdown-item {{ request('role') == 'admin' ? 'muted' : '' }}" href="{{ route('user.index', ['role' => 'admin']) }}">
-                                    Admin
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('user.index', ['role' => 'operator']) }}">
-                                    Operator
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                @else
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" aria-current="page" href="{{ route('dashboard') }}">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="{{ route('lending.index') }}">Lending</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="{{ route('item.index') }}">Item</a>
-                    </li>
-                    <li class="nav-item dropdown-center">
-                        <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#">
-                            <i class="bi bi-person-fill"></i> User
-                        </a>
-                        <ul class="dropdown-menu bg-transparent border-0 shadow-none">
-                            <a class="dropdown-item" href="{{ route('user.edit', auth()->id() ) }}">
-                                Edit
-                            </a>
-                        </ul>
-                    </li>
-                @endif
-            @endauth
 
-        </ul>
-        <div class="col-10 mt-3 pe-4">
-            @yield('content')
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 bg-light border-end vh-100 d-flex flex-column p-3">
+                <a href="{{ route('dashboard') }}"
+                    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                    <i class="bi bi-box-seam-fill fs-4 me-2"></i>
+                    <span class="fs-4 fw-bolder">Inventaris</span>
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    @auth
+                        @if (auth()->user()->role == 'admin')
+                            <li class="nav-item">
+                                <a href="{{ route('dashboard') }}"
+                                    class="nav-link text-dark @if (request()->routeIs('dashboard')) active @endif">
+                                    <i class="bi bi-grid-fill me-2"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('category.index') }}"
+                                    class="nav-link text-dark @if (request()->routeIs('category.index')) active @endif">
+                                    <i class="bi bi-tags-fill me-2"></i>
+                                    Category
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('item.index') }}"
+                                    class="nav-link text-dark @if (request()->routeIs('item.index')) active @endif">
+                                    <i class="bi bi-box-seam-fill me-2"></i>
+                                    Item
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#userSubmenu" data-bs-toggle="collapse"
+                                    class="nav-link text-dark dropdown-toggle @if (request()->routeIs('user.index')) active @endif">
+                                    <i class="bi bi-people-fill me-2"></i>
+                                    User
+                                </a>
+                                <ul class="collapse list-unstyled" id="userSubmenu" style="padding-left: 2rem;">
+                                    <li>
+                                        <a href="{{ route('user.index', ['role' => 'admin']) }}"
+                                            class="nav-link text-dark @if (request('role') == 'admin') fw-bold @endif">Admin</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('user.index', ['role' => 'operator']) }}"
+                                            class="nav-link text-dark @if (request('role') == 'operator') fw-bold @endif">Operator</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a href="{{ route('dashboard') }}"
+                                    class="nav-link text-dark @if (request()->routeIs('dashboard')) active @endif">
+                                    <i class="bi bi-grid me-2"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('lending.index') }}"
+                                    class="nav-link text-dark @if (request()->routeIs('lending.index')) active @endif">
+                                    <i class="bi bi-arrow-left-right me-2"></i>
+                                    Lending
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('item.index') }}"
+                                    class="nav-link text-dark @if (request()->routeIs('item.index')) active @endif">
+                                    <i class="bi bi-box-seam me-2"></i>
+                                    Item
+                                </a>
+                            </li>
+                        @endif
+                    @endauth
+                </ul>
+                <hr>
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle"
+                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle fs-4 me-2"></i>
+                        <strong>{{ auth()->user()->name }}</strong>
+                    </a>
+                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser1">
+                        @if (auth()->user()->role != 'admin')
+                            <li><a class="dropdown-item" href="{{ route('user.edit', auth()->id()) }}">Edit Profile</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                        @endif
+                        <li>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-4">
+                @yield('content')
+            </main>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 </body>
+
 </html>

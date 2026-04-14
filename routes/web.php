@@ -30,13 +30,16 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/add', [CategoryController::class, 'store'])->name('store');
             Route::get('/edit/{category}', [CategoryController::class, 'edit'])->name('edit');
             Route::patch('/edit/{category}', [CategoryController::class, 'update'])->name('update');
+            Route::delete('/delete/{category}', [CategoryController::class, 'destroy'])->name('destroy');
+            Route::get('/export', [CategoryController::class, 'export'])->name('export');
         });
-        
+
         Route::prefix('/item')->name('item.')->group(function() {
             Route::get('/add', [ItemController::class, 'create'])->name('create');
             Route::post('/add', [ItemController::class, 'store'])->name('store');
             Route::get('/edit/{item}', [ItemController::class, 'edit'])->name('edit');
             Route::patch('/edit/{item}', [ItemController::class, 'update'])->name('update');
+            Route::delete('/delete/{item}', [ItemController::class, 'destroy'])->name('destroy');
             Route::get('/export', [ItemController::class, 'export'])->name('export');
         });
 
@@ -46,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/add', [UserController::class, 'store'])->name('store');
             Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('destroy');
             Route::patch('/reset/{id}', [UserController::class, 'resetPassword'])->name('reset');
+            Route::get('/export/{role}', [UserController::class, 'export'])->name('export');
         });
 
         Route::get('/lending/show{item}', [LendingController::class, 'show'])->name('lending.show');
@@ -58,10 +62,11 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/add', [LendingController::class, 'store'])->name('store');
             Route::patch('/return/{lending}', [LendingController::class, 'update'])->name('return');
             Route::delete('/delete/{lending}', [LendingController::class, 'destroy'])->name('destroy');
+            Route::get('/export', [LendingController::class, 'export'])->name('export');
         });
     });
 
 
 
-    
+
 });

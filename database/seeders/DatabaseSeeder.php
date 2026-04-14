@@ -24,5 +24,13 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
             'password_plain' => 'admi1',
         ]);
+
+        User::factory()->create([
+            'name' => 'Operator',
+            'email' => 'operator@example.com',
+            'password' => 'oper2',
+            'role' => 'operator',
+            'password_plain' => 'oper2',
+        ]);
     }
 }

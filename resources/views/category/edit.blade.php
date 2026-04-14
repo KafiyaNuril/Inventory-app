@@ -5,7 +5,7 @@
             {{ Session::get('success') }}
         </div>
     @endif
-    <div class="container card p-4 w-50">
+    <div class="container mt-5 card p-4 w-50">
         <form action="{{ route('category.update', $category->id) }}" method="POST">
             @csrf
             @method('PATCH')
@@ -32,7 +32,7 @@
                 @enderror
             </div>
             <a href="{{ route('category.index') }}" class="btn btn-secondary">Cancel</a>
-            <button type="submit" class="btn btn-dark">Submit</button>
+            <button type="submit" class="btn btn-dark">Update</button>
         </form>
     </div>
 @endsection

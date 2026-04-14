@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory App</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Inventaris App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
+
 <body>
-    
     <nav class="navbar fixed-top shadow-sm bg-body rounded">
         <div class="container-fluid mx-3 my-2">
-            <span class="navbar-brand fw-bold">Inventory App</span>
+            <span class="navbar-brand fw-bold">Inventaris App</span>
             @auth
-                <a href="{{route('dashboard')}}" type="button" class="btn btn-primary me-5 px-4">Go to Dashboard</a>
+                <a href="{{ route('dashboard') }}" type="button" class="btn btn-primary me-5 px-4">Go to Dashboard</a>
             @endauth
             @guest
                 <button type="button" class="btn btn-primary me-5 px-4" data-bs-toggle="modal"
@@ -20,39 +22,42 @@
             @endguest
         </div>
     </nav>
-    <div class="vh-100 bg-primary d-flex align-items-center justify-content-center mt-5">
+    <div class="vh-100 d-flex align-items-center justify-content-center mt-5">
         <div>
-            <div class="text-center text-white">
-                <h1 class="fw-bold">Inventory Management</h1>
-                <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt, voluptatum.</p>
+            <div class="text-center">
+                <h1 class="fw-bold">Inventaris Management</h1>
+                <p class="lead">Manage your inventaris easily</p>
+                <img src="{{ asset('assets/img/Inventaris.jpg') }}" class="rounded w-50 mx-auto" alt="...">
             </div>
         </div>
     </div>
 
-    <div class="container w-75 mb-5">
+    <div class="container w-75 mb-5 pb-5">
         <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
             <div class="col text-center">
                 <div class="p-3 border rounded shadow-sm bg-white">
                     <img src="{{ asset('assets/img/item_data.jpg') }}" class="img-fluid rounded mb-2" alt="item_data">
-                    <p class="mb-0 fw-bold">Item Data</p>
+                    <p class="mb-0 fw-bold">Category Data</p>
                 </div>
             </div>
             <div class="col text-center">
                 <div class="p-3 border rounded shadow-sm bg-white">
-                    <img src="" class="img-fluid rounded mb-2" alt="item_data">
-                    <p class="mb-0 fw-bold">Item Data</p>
+                    <img src="{{ asset('assets/img/borrow.jpg') }}" class="img-fluid rounded mb-2" alt="item_data">
+                    <p class="mb-0 fw-bold">Borrow stuff</p>
                 </div>
             </div>
             <div class="col text-center">
                 <div class="p-3 border rounded shadow-sm bg-white">
-                    <img src="" class="img-fluid rounded mb-2" alt="item_data">
-                    <p class="mb-0 fw-bold">Item Data</p>
+                    <img src="{{ asset('assets/img/manage_lending.jpg') }}" class="img-fluid rounded mb-2"
+                        alt="item_data">
+                    <p class="mb-0 fw-bold">Manage Lending</p>
                 </div>
             </div>
             <div class="col text-center">
                 <div class="p-3 border rounded shadow-sm bg-white">
-                    <img src="" class="img-fluid rounded mb-2" alt="item_data">
-                    <p class="mb-0 fw-bold">Item Data</p>
+                    <img src="{{ asset('assets/img/management_tech.jpg') }}" class="img-fluid rounded mb-2"
+                        alt="item_data">
+                    <p class="mb-0 fw-bold">Management Tech</p>
                 </div>
             </div>
         </div>
@@ -61,7 +66,7 @@
     <footer class="mt-5">
         <div class="border-top d-flex justify-content-between align-items-center pe-5 py-4">
             <div class="w-25 text-center">
-                <img src="" class="rounded w-25 mx-auto" alt="...">
+                <img src="{{ asset('assets/img/wikrama-logo.png') }}" class="rounded w-25 mx-auto" alt="...">
                 <p class="fw-bold text-secondary">SMK Wikrama Bogor</p>
                 <p class="mb-0 text-secondary">0251-8242411</p>
                 <p class="text-secondary">smkwikrama@sch.id</p>
@@ -78,9 +83,12 @@
                     <h4>Our Address</h4>
                     <a>Jl. Raya Wangun Kelurahan Sindangsari Bogor Timur 16720</a>
                     <div class="dflex justify-content-around">
-                        <a href="https://www.facebook.com/smkwikrama" class="text-decoration-none btn"><i class="bi bi-facebook fs-5"></i></a>
-                        <a href="https://www.instagram.com/smkwikrama/" class="text-decoration-none btn"><i class="bi bi-instagram fs-5"></i></a>
-                        <a href="https://www.youtube.com/@smkwikrama" class="text-decoration-none btn"><i class="bi bi-youtube fs-5"></i></a>
+                        <a href="https://www.facebook.com/smkwikrama" class="text-decoration-none btn"><i
+                                class="bi bi-facebook fs-5"></i></a>
+                        <a href="https://www.instagram.com/smkwikrama/" class="text-decoration-none btn"><i
+                                class="bi bi-instagram fs-5"></i></a>
+                        <a href="https://www.youtube.com/@smkwikrama" class="text-decoration-none btn"><i
+                                class="bi bi-youtube fs-5"></i></a>
                     </div>
                 </div>
             </div>
@@ -103,11 +111,10 @@
                         <div class="alert alert-danger">{{ Session::get('canAccess') }}</div>
                     @endif
                     <div class="modal-header">
-                        <h1 class="modal-title">Login</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                        <h1 class="modal-title">Login Account</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body px-3">
                         @if (session('error'))
                             <div class="alert alert-danger">
                                 {{ session('error') }}
@@ -133,7 +140,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Login</button>
                     </div>
                 </form>
             </div>
@@ -148,6 +155,9 @@
         </script>
     @endif
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
+    </script>
 </body>
+
 </html>

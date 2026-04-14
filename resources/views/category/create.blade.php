@@ -5,7 +5,7 @@
             {{ Session::get('success') }}
         </div>
     @endif
-    <div class="container card p-4 w-50">
+    <div class="container mt-5 card p-4 w-50">
         <form action="{{ route('category.store') }}" method="POST">
             @csrf
 

@@ -6,6 +6,8 @@ use App\Models\Item;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ItemExport;
 
 class ItemController extends Controller
 {
@@ -95,6 +97,12 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        //
+        $item->delete();
+        return redirect()->route('item.index')->with('success', 'Item deleted successfully');
+    }
+
+    public function export()
+    {
+        return Excel::download(new ItemExport, 'items.xlsx');
     }
 }

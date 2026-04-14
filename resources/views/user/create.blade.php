@@ -36,7 +36,7 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <a href="{{ route('user.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ url()->previous() }} class="btn btn-secondary">Cancel</a>
             <button type="submit" class="btn btn-dark">Submit</button>
         </form>
     </div>
